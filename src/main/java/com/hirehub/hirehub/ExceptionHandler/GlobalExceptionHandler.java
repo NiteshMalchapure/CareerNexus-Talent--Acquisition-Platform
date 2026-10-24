@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -75,11 +74,22 @@ public class GlobalExceptionHandler {
     	public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException exception){
     		
     		ErrorResponse error= new ErrorResponse(HttpStatus.NOT_FOUND.value()
-    				, HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage());
-    		
+    				, HttpStatus.NOT_FOUND.getReasonPhrase()
+    				,exception.getMessage());
+
     		return ResponseEntity
     				.status(HttpStatus.NOT_FOUND)
     				.body(error);
     			
+    	}
+    	@ExceptionHandler(IllegalArgumentException.class)
+    	public ResponseEntity<ErrorResponse> handelIllegalArgumentException(IllegalArgumentException exception){
+    		
+    		 ErrorResponse resoponse= new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+    				 HttpStatus.BAD_REQUEST.getReasonPhrase(),
+    				 exception.getMessage());
+    		 return ResponseEntity
+    				 .status(HttpStatus.BAD_REQUEST)
+    				 .body(resoponse);
     	}
 }

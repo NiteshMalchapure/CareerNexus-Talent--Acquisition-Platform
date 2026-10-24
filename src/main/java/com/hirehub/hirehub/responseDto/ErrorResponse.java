@@ -23,8 +23,7 @@ public class ErrorResponse {
 		this.stauscode = stauscode;
 		this.error = error;
 		this.msg = msg;
-
-		
+	
 	}
 	
 	public Map<String, String> getErrors() {
